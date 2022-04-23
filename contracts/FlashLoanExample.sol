@@ -16,9 +16,6 @@ contract FlashLoanExample is FlashLoanSimpleReceiverBase {
   {}
 
   function createFlashLoan(address asset, uint amount) external {
-
-      uint balance = IERC20(asset).balanceOf(address(this));
-      require(balance > amount, "Balance of token in the contract should be greater than amount");
       address reciever = address(this);
       bytes memory params = "";
       uint16 referralCode = 0;

@@ -15,7 +15,7 @@ How do traditional banking systems work? If you want a loan you have to put forw
 However, you may need just a shit ton of money at times to execute some sort of attack that you cannot possibly provide collateral for, perhaps to execute a huge arbitrage trade or attack some contracts.
 
 ## What are Flash Loans?
-As you might be thinking its some kind of loan? Well yes it is. Its a special type of a loan where a borrower can borrow an asset as long as they return the borrowed amount and some intrest **before the end of the transaction**. Since the borrowed amount is returned back, with interest, in the same transaction, there is no possibility for anyone to run away with the borrowed money. If the loan is not repaid in the same transaction, the transaction fails overall and is reverted.
+As you might be thinking its some kind of loan? Well yes it is. Its a special type of a loan where a borrower can borrow an asset as long as they return the borrowed amount and some interest **before the end of the transaction**. Since the borrowed amount is returned back, with interest, in the same transaction, there is no possibility for anyone to run away with the borrowed money. If the loan is not repaid in the same transaction, the transaction fails overall and is reverted.
 
 This simple, but fascinating, detail is what allows you to borrow billions with no upfront capital or collateral, because you *need* to pay it back in the same transaction itself. However, you can go wild with that money in between borrowing it and paying it back.
 
@@ -45,9 +45,9 @@ If you look at this diagram, you can see how a flash loan helped the user make a
 
 Now in the `executeOperation` method after recieving the DAI, you can call the contract for `Exchange A` and buy some `LW3` tokens from all the DAI that the  `Pool Contract` sent you. After recieving the`LW3 Tokens` you can again swap them for DAI by calling the `Exchange B` contract. 
 
-By this time now your contract has made a profit, so it can allow the `Pool Contract` to withdraw the amount which it sent our contract along with some intrest and return from the `executeOperation` method.
+By this time now your contract has made a profit, so it can allow the `Pool Contract` to withdraw the amount which it sent our contract along with some interest and return from the `executeOperation` method.
 
-Once our contract returns from the `executeOperation` method, the `Pool Contract` has allowance to withdraw the DAI it originally sent along with the intrest from our `FlashLoan Contract`, so it withdraws it.
+Once our contract returns from the `executeOperation` method, the `Pool Contract` has allowance to withdraw the DAI it originally sent along with the interest from our `FlashLoan Contract`, so it withdraws it.
 
 All this happens in one transaction, if anything is not satfified during the transaction like for example our contract fails in doing the arbitrage, rememeber everything will get reverted and it will be as if our contract never got the DAI in the first place. All you would have lost is the gas fees for executing all this.
 

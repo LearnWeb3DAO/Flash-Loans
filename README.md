@@ -49,7 +49,7 @@ By this time now your contract has made a profit, so it can allow the `Pool Cont
 
 Once our contract returns from the `executeOperation` method, the `Pool Contract` has allowance to withdraw the DAI it originally sent along with the interest from our `FlashLoan Contract`, so it withdraws it.
 
-All this happens in one transaction, if anything is not satfified during the transaction like for example our contract fails in doing the arbitrage, rememeber everything will get reverted and it will be as if our contract never got the DAI in the first place. All you would have lost is the gas fees for executing all this.
+All this happens in one transaction, if anything is not satisfied during the transaction like for example our contract fails in doing the arbitrage, rememeber everything will get reverted and it will be as if our contract never got the DAI in the first place. All you would have lost is the gas fees for executing all this.
 
 User can now withdraw profits from the contract after the transaction is completed
 

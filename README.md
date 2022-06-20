@@ -8,6 +8,8 @@ In this level we will learn how to take a Flash Loan from [Aave](https://aave.co
 
 Are you excited? Well, I surely am 🥳🥳
 
+<Quiz questionId="b7968c60-8829-4ce8-bde8-70fcd8a3282f" />
+
 ## Traditional Banking Systems?
 
 How do traditional banking systems work? If you want a loan you have to put forward a collateral against which you can take the loan. This is typically how lending/borrowing in DeFi also works. 
@@ -17,15 +19,23 @@ However, you may need just a shit ton of money at times to execute some sort of 
 ## What are Flash Loans?
 As you might be thinking its some kind of loan? Well yes it is. Its a special type of a loan where a borrower can borrow an asset as long as they return the borrowed amount and some interest **before the end of the transaction**. Since the borrowed amount is returned back, with interest, in the same transaction, there is no possibility for anyone to run away with the borrowed money. If the loan is not repaid in the same transaction, the transaction fails overall and is reverted.
 
+<Quiz questionId="5492d05f-50b3-4052-95ef-a6ad34a68b48" />
+
 This simple, but fascinating, detail is what allows you to borrow billions with no upfront capital or collateral, because you *need* to pay it back in the same transaction itself. However, you can go wild with that money in between borrowing it and paying it back.
+
+<Quiz questionId="8eb0392f-c88f-4a38-9573-e677247d2fb8" />
 
 Remember that all of this happens in one transaction 👀
 
+<Quiz questionId="9a3b6525-a088-4793-ad7b-c16923c1af55" />
+
 ## Applications of a Flash Loan
 
-They help in arbitrage between assets, often play part in DeFi hacks, and other use cases. You can essentially use your own creativity to create something new 😇
+They help in arbitrage between assets, causing liquidations in DeFi lending protocols, often play part in DeFi hacks, and other use cases. You can essentially use your own creativity to create something new 😇
 
 In this tutorial we will only focus on how `Simple Flash Loan` works which includes being able to borrow one asset. There are alternatives where you can borrow multiple assets as well. To read about other kinds of flash loans, read the documentation from [Aave](https://docs.aave.com/developers/guides/flash-loans)
+
+<Quiz questionId="1db17a75-1354-4eb6-9578-a21de08fcbf9" />
 
 Let us try to go a little deep on one use case which is of arbitrage. What is arbitrage? Imagine there are two crypto exchanges - A and B. Now A is selling a token `LW3` for less price than B. You can make profits if you buy `LW3` from A in exchange of DAI and then sell it on B gaining more DAI than the amount you initially started with. 
 
@@ -43,7 +53,11 @@ There are 4 basic steps to any flash loan. To execute a flash loan, you first ne
 
 If you look at this diagram, you can see how a flash loan helped the user make a profit in an arbitrage trade. Initially the user started a transaction by calling lets say a method `createFlashLoan` in your contract which is named as `FlashLoan Contract`. When the user calls this function, your contract calls the `Pool Contract` which exposes the liquidity management methods for a given pool of assets and has already been deployed by Aave. When the `Pool Contract` recieves a request to create a flash loan, it calls the `executeOperation` method on your contract with the DAI in the amount user has requested. Note that the user didnt have to provide any collateral to get the DAI, he just had to call the transaction and that `Pool Contract` requires you to have the `executeOperation` method for it to send you the DAI
 
+<Quiz questionId="e936505b-d029-4567-a7e0-3fe8a7cb7901" />
+
 Now in the `executeOperation` method after recieving the DAI, you can call the contract for `Exchange A` and buy some `LW3` tokens from all the DAI that the  `Pool Contract` sent you. After recieving the`LW3 Tokens` you can again swap them for DAI by calling the `Exchange B` contract. 
+
+<Quiz questionId="bb3db5ee-ac10-4695-9ba6-281549095fe7" />
 
 By this time now your contract has made a profit, so it can allow the `Pool Contract` to withdraw the amount which it sent our contract along with some interest and return from the `executeOperation` method.
 
@@ -51,9 +65,13 @@ Once our contract returns from the `executeOperation` method, the `Pool Contract
 
 All this happens in one transaction, if anything is not satisfied during the transaction like for example our contract fails in doing the arbitrage, rememeber everything will get reverted and it will be as if our contract never got the DAI in the first place. All you would have lost is the gas fees for executing all this.
 
+<Quiz questionId="550ff976-f409-4e5e-995b-9046c142db2c" />
+
 User can now withdraw profits from the contract after the transaction is completed
 
 It has been suggested by Aave to withdraw the funds after a successful arbitrage and not keep them long in your contract because it can cause a `griefing attack`. An example has been provided [here](https://ethereum.stackexchange.com/questions/92391/explain-griefing-attack-on-aave-flash-loan/92457#92457).
+
+<Quiz questionId="48ffb999-dde1-4fe7-9a93-a75dba57bdd9" />
 
 ## Build
 
@@ -158,6 +176,7 @@ Now after declaring the contract, if we look at the constructor, it takes in a p
 
 The first function we implemented was `createFlashLoan` which takes in the asset and amount from the user for which he wants to start the flash loan. Now for the reciever address, you can specify the address of the `FlashLoanExample Contract` and we have no params so lets just keep it as empty. For `referralCode` we kept it as 0 because this transaction was executed by user directly without any middle man. To read more about these parameters you can go [here](https://docs.aave.com/developers/core-contracts/pool). After declaring these variables, you can call the `flashLoanSimple` method inside the instance of the `Pool Contract` which is initialized within the `FlashLoanSimpleReceiverBase` which our contract had inherited, you can look at the code [here](https://github.com/aave/aave-v3-core/blob/master/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol#L19).
 
+<Quiz questionId="58eb6e07-7544-44d6-b4d1-4abc5fb350e0" />
 
 ```solidity
 function createFlashLoan(address asset, uint amount) external {
@@ -233,7 +252,7 @@ Now lets add the env variable for `ALCHEMY_API_KEY_URL`.
 
 Create a new file called `.env` and add the following lines of code to it
 
-```env
+```
 ALCHEMY_API_KEY_URL="ALCHEMY-API-KEY-URL-FOR-POLYGON-MAINNET"
 ```
 Replace `ALCHEMY-API-KEY-URL-FOR-POLYGON-MAINNET` with the url of the node for Polygon Mainnet. To get this url go to [alchemy](https://alchemy.com) and login. After that click on `Create App` and from the dropdown select chain as `Polygon` and network as `Mainnet`. The app should now be created, click on `View Key` and copy the `HTTP` value.
@@ -350,3 +369,5 @@ If the tests pass, you have successfully executed a flash loan.
 Hurray 🥂🥂🥂🥂🥂
 
 This is huge 🚀🚀🚀
+
+<SubmitQuiz />

@@ -2,9 +2,9 @@
 
 ![](https://i.imgur.com/HZQWDCW.png)
 
-Have you ever wanted to become a billionaire without having to collateralize anything? Well, that's flash loans. 🤑🤑
+Have you ever wanted to become a billionaire without having to collateralize anything? Well, that's what flash loans are for. 🤑🤑
 
-In this level we will learn how to take a Flash Loan from [Aave](https://aave.com) and utilize this new concept in DeFi which doesnt exist in the web2 world. There is no good analogy for this from the traditional finance world, since this is simply impossible outside blockchains.
+In this level we will learn how to take a Flash Loan from [Aave](https://aave.com) and utilize this new concept in DeFi which doesn't exist in the web2 world. There is no good analogy for this from the traditional finance world, since this is simply impossible outside blockchains.
 
 Are you excited? Well, I surely am 🥳🥳
 
@@ -17,7 +17,7 @@ How do traditional banking systems work? If you want a loan you have to put forw
 However, you may need just a shit ton of money at times to execute some sort of attack that you cannot possibly provide collateral for, perhaps to execute a huge arbitrage trade or attack some contracts.
 
 ## What are Flash Loans?
-As you might be thinking its some kind of loan? Well yes it is. Its a special type of a loan where a borrower can borrow an asset as long as they return the borrowed amount and some interest **before the end of the transaction**. Since the borrowed amount is returned back, with interest, in the same transaction, there is no possibility for anyone to run away with the borrowed money. If the loan is not repaid in the same transaction, the transaction fails overall and is reverted.
+You might be thinking: Is it some kind of loan? Well, yes, it is. It's a special type of loan where a borrower can borrow an asset as long as they return the borrowed amount and some interest **before the end of the transaction**. Since the borrowed amount is returned back, with interest, in the same transaction, there is no possibility for anyone to run away with the borrowed money. If the loan is not repaid in the same transaction, the transaction fails overall and is reverted.
 
 <Quiz questionId="5492d05f-50b3-4052-95ef-a6ad34a68b48" />
 
@@ -33,11 +33,11 @@ Remember that all of this happens in one transaction 👀
 
 They help in arbitrage between assets, causing liquidations in DeFi lending protocols, often play part in DeFi hacks, and other use cases. You can essentially use your own creativity to create something new 😇
 
-In this tutorial we will only focus on how `Simple Flash Loan` works which includes being able to borrow one asset. There are alternatives where you can borrow multiple assets as well. To read about other kinds of flash loans, read the documentation from [Aave](https://docs.aave.com/developers/guides/flash-loans)
+In this tutorial we will only focus on how a `Simple Flash Loan` works which includes being able to borrow one asset. There are alternatives where you can borrow multiple assets as well. To read about other kinds of flash loans, read the documentation from [Aave](https://docs.aave.com/developers/guides/flash-loans)
 
 <Quiz questionId="1db17a75-1354-4eb6-9578-a21de08fcbf9" />
 
-Let us try to go a little deep on one use case which is of arbitrage. What is arbitrage? Imagine there are two crypto exchanges - A and B. Now A is selling a token `LW3` for less price than B. You can make profits if you buy `LW3` from A in exchange of DAI and then sell it on B gaining more DAI than the amount you initially started with. 
+Let us try to go a little deep on one use case, which is arbitrage. What is arbitrage? Imagine there are two crypto exchanges - A and B. Now A is selling a token `LW3` for a lower price than B. You can make profits if you buy `LW3` from A in exchange for DAI and then sell it on B gaining more DAI than the amount you initially started with. 
 
 Trading off price differences across exchanges is called arbitrage. Arbitrageurs are a necessary evil that help keep prices consistent across exchanges.
 
@@ -51,11 +51,11 @@ There are 4 basic steps to any flash loan. To execute a flash loan, you first ne
 
 ![](https://i.imgur.com/wbg8rZ2.png)
 
-If you look at this diagram, you can see how a flash loan helped the user make a profit in an arbitrage trade. Initially the user started a transaction by calling lets say a method `createFlashLoan` in your contract which is named as `FlashLoan Contract`. When the user calls this function, your contract calls the `Pool Contract` which exposes the liquidity management methods for a given pool of assets and has already been deployed by Aave. When the `Pool Contract` receives a request to create a flash loan, it calls the `executeOperation` method on your contract with the DAI in the amount user has requested. Note that the user didnt have to provide any collateral to get the DAI, he just had to call the transaction and that `Pool Contract` requires you to have the `executeOperation` method for it to send you the DAI
+If you look at this diagram, you can see how a flash loan helped the user make a profit in an arbitrage trade. Initially the user started a transaction by calling lets say a method `createFlashLoan` in your contract which is named as `FlashLoan Contract`. When the user calls this function, your contract calls the `Pool Contract` which exposes the liquidity management methods for a given pool of assets and has already been deployed by Aave. When the `Pool Contract` receives a request to create a flash loan, it calls the `executeOperation` method on your contract with the DAI in the amount user has requested. Note that the user didn't have to provide any collateral to get the DAI, he just had to call the transaction and that `Pool Contract` requires you to have the `executeOperation` method for it to send you the DAI
 
 <Quiz questionId="e936505b-d029-4567-a7e0-3fe8a7cb7901" />
 
-Now in the `executeOperation` method after receiving the DAI, you can call the contract for `Exchange A` and buy some `LW3` tokens from all the DAI that the  `Pool Contract` sent you. After receiving the`LW3 Tokens` you can again swap them for DAI by calling the `Exchange B` contract. 
+Now in the `executeOperation` method after receiving the DAI, you can call the contract for `Exchange A` and buy some `LW3` tokens from all the DAI that the  `Pool Contract` sent you. After receiving the `LW3 Tokens` you can again swap them for DAI by calling the `Exchange B` contract. 
 
 <Quiz questionId="bb3db5ee-ac10-4695-9ba6-281549095fe7" />
 
@@ -63,11 +63,11 @@ By this time now your contract has made a profit, so it can allow the `Pool Cont
 
 Once our contract returns from the `executeOperation` method, the `Pool Contract` has allowance to withdraw the DAI it originally sent along with the interest from our `FlashLoan Contract`, so it withdraws it.
 
-All this happens in one transaction, if anything is not satisfied during the transaction like for example our contract fails in doing the arbitrage, rememeber everything will get reverted and it will be as if our contract never got the DAI in the first place. All you would have lost is the gas fees for executing all this.
+All this happens in one transaction, if anything is not satisfied during the transaction like for example our contract fails in doing the arbitrage, remember everything will get reverted and it will be as if our contract never got the DAI in the first place. All you would have lost is the gas fees for executing all this.
 
 <Quiz questionId="550ff976-f409-4e5e-995b-9046c142db2c" />
 
-User can now withdraw profits from the contract after the transaction is completed
+User can now withdraw profits from the contract after the transaction is completed.
 
 It has been suggested by Aave to withdraw the funds after a successful arbitrage and not keep them long in your contract because it can cause a `griefing attack`. An example has been provided [here](https://ethereum.stackexchange.com/questions/92391/explain-griefing-attack-on-aave-flash-loan/92457#92457).
 
@@ -75,7 +75,7 @@ It has been suggested by Aave to withdraw the funds after a successful arbitrage
 
 ## Build
 
-Lets build an example where you can experience how we can start a flash loan. Note we wont be actually doing an arbitrage here, because finding profitable arbitrage opportunities is the hardest part and not related to the code, but will esssentially just learn how to execute a flash loan.
+Lets build an example where you can experience how we can start a flash loan. Note we won't be actually doing an arbitrage here, because finding profitable arbitrage opportunities is the hardest part and not related to the code, but will essentially just learn how to execute a flash loan.
 
 Lets get started 🚀
 
@@ -163,7 +163,7 @@ contract FlashLoanExample is FlashLoanSimpleReceiverBase {
 }
 ```
 
-Now lets try to decompose this contract and understand it a little better. When we declared the contract we did it like this `contract FlashLoanExample is FlashLoanSimpleReceiverBase {`, our contract is named as `FlashLoanExample` and it is inheriting a contract named as `FlashLoanSimpleReceiverBase` which is a contract from [Aave](https://github.com/aave/aave-v3-core/blob/master/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol) which you use to setup your contract as the receiver for the flash loan. 
+Now let's try to decompose this contract and understand it a little better. When we declared the contract we did it like this `contract FlashLoanExample is FlashLoanSimpleReceiverBase {`, our contract is named `FlashLoanExample` and it is inheriting a contract named `FlashLoanSimpleReceiverBase` which is a contract from [Aave](https://github.com/aave/aave-v3-core/blob/master/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol) which you use to setup your contract as the receiver for the flash loan. 
 
 Now after declaring the contract, if we look at the constructor, it takes in a provider of type `IPoolAddressesProvider` which is essentially the address of the `Pool Contract` we talked about in the example above wrapped around an interface of type `IPoolAddressesProvider`. This interface is also provided to us by Aave and can be found [here](https://github.com/aave/aave-v3-core/blob/master/contracts/interfaces/IPoolAddressesProvider.sol). `FlashLoanSimpleReceiverBase` requires this provider in its constructor.
 
@@ -174,7 +174,7 @@ Now after declaring the contract, if we look at the constructor, it takes in a p
   {}
 ```
 
-The first function we implemented was `createFlashLoan` which takes in the asset and amount from the user for which he wants to start the flash loan. Now for the receiver address, you can specify the address of the `FlashLoanExample Contract` and we have no params so lets just keep it as empty. For `referralCode` we kept it as 0 because this transaction was executed by user directly without any middle man. To read more about these parameters you can go [here](https://docs.aave.com/developers/core-contracts/pool). After declaring these variables, you can call the `flashLoanSimple` method inside the instance of the `Pool Contract` which is initialized within the `FlashLoanSimpleReceiverBase` which our contract had inherited, you can look at the code [here](https://github.com/aave/aave-v3-core/blob/master/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol#L19).
+The first function we implemented was `createFlashLoan` which takes in the asset and amount from the user for which he wants to start the flash loan. Now for the receiver address, you can specify the address of the `FlashLoanExample Contract` and we have no params, so let's just keep it as empty. For `referralCode` we kept it as 0 because this transaction was executed by user directly without any middle man. To read more about these parameters you can go [here](https://docs.aave.com/developers/core-contracts/pool). After declaring these variables, you can call the `flashLoanSimple` method inside the instance of the `Pool Contract` which is initialized within the `FlashLoanSimpleReceiverBase` which our contract had inherited, you can look at the code [here](https://github.com/aave/aave-v3-core/blob/master/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol#L19).
 
 <Quiz questionId="58eb6e07-7544-44d6-b4d1-4abc5fb350e0" />
 
@@ -195,7 +195,7 @@ function createFlashLoan(address asset, uint amount) external {
 
 ```
 
-After making a `flashLoanSimple` call, `Pool Contract` will perform some checks and will send asset in the amount that was requested, to the asset to the `FlashLoanExample Contract` and will call the `executeOperation` method. Now inside this method you can do anything with this asset but in this contract we just give approval to the `Pool Contract` to withdraw the amount that we owe along with some premium. Then we emit a log and return from the function
+After making a `flashLoanSimple` call, `Pool Contract` will perform some checks and will send the asset in the amount that was requested to the `FlashLoanExample Contract` and will call the `executeOperation` method. Now inside this method you can do anything with this asset but in this contract we just give approval to the `Pool Contract` to withdraw the amount that we owe along with some premium. Then we emit a log and return from the function.
 
 ```solidity
    function executeOperation(
@@ -246,16 +246,16 @@ module.exports = {
 };
 ```
 
-You will see that we configured hardhat forking here
+You will see that we configured hardhat forking here.
 
 Now lets add the env variable for `ALCHEMY_API_KEY_URL`. 
 
-Create a new file called `.env` and add the following lines of code to it
+Create a new file called `.env` and add the following lines of code to it.
 
 ```
 ALCHEMY_API_KEY_URL="ALCHEMY-API-KEY-URL-FOR-POLYGON-MAINNET"
 ```
-Replace `ALCHEMY-API-KEY-URL-FOR-POLYGON-MAINNET` with the url of the node for Polygon Mainnet. To get this url go to [alchemy](https://alchemy.com) and login. After that click on `Create App` and from the dropdown select chain as `Polygon` and network as `Mainnet`. The app should now be created, click on `View Key` and copy the `HTTP` value.
+Replace `ALCHEMY-API-KEY-URL-FOR-POLYGON-MAINNET` with the URL of the node for Polygon Mainnet. To get this URL go to [alchemy](https://alchemy.com) and login. After that click on `Create App` and from the dropdown select chain as `Polygon` and network as `Mainnet`. The app should now be created, click on `View Key` and copy the `HTTPS` value.
 
 
 After creating the `.env` file, you will need one more file before we can actually write the test.
@@ -266,7 +266,7 @@ Create a new file named `config.js` and add the following lines of code to it
 // Mainnet DAI Address
 const DAI = "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063";
 // Random user's address that happens to have a lot of DAI on Polygon Mainnet
-const DAI_WHALE = "0xD92B63D0E9F2CE9F77c32BfeB2C6fACd20989eB3";
+const DAI_WHALE = "0xdfD74E3752c187c4BA899756238C76cbEEfa954B";
 
 // Mainnet Pool contract address
 const POOL_ADDRESS_PROVIDER = "0xa97684ead0e402dc232d5a977953df7ecbab3cdb";
@@ -281,9 +281,9 @@ If you look at this file, we have three variables - `DAI`, `DAI_WHALE` and `POOL
 
 Since we are not actually executing any arbitrage, and therefore will not be able to pay the premium if we run the contract as-is, we use another Hardhat feature called **impersonation** that lets us send transactions on behalf of *any* address, even without their private key. However, of course, this only works on the local development network and not on real networks. Using impersonation, we will steal some DAI from the `DAI_WHALE` so we have enough DAI to pay back the loan with premium.
 
-Awesome 🚀, we have everything setup now lets go ahead and write the test
+Awesome 🚀, we have everything setup now lets go ahead and write the test.
 
-Inside your `test` folder create a new file `deploy.js` and add the following lines of code to it
+Inside your `test` folder create a new file `deploy.js` and add the following lines of code to it.
 
 ```javascript
 const { expect, assert } = require("chai");
@@ -327,11 +327,11 @@ describe("Deploy a Flash Loan", function () {
 
 ```
 
-Now lets try to understand whats happening in these lines of code
+Now let's try to understand whats happening in these lines of code.
 
-First using Hardhat's extended `ethers` version, we call the function `getContractAt` to get the instance of DAI deployed on Polygon Mainnet. Remember Hardhat will simulate Polygon Mainnet, so when you get the contract at the address of `DAI` which you had specified in the `config.js`, Hardhat will actually create an instance of DAI contract which matches that of Polygon Mainnet.
+First, using Hardhat's extended `ethers` version, we call the function `getContractAt` to get the instance of DAI deployed on Polygon Mainnet. Remember Hardhat will simulate Polygon Mainnet, so when you get the contract at the address of `DAI` which you had specified in the `config.js`, Hardhat will actually create an instance of the DAI contract which matches that of Polygon Mainnet.
 
-After that the lines given below, will again try to impersonate/simulate the account on Polygon Mainnet with the address as `DAI_WHALE`. Now the fascinating point is that even though Hardhat doesnt have the private key of `DAI_WHALE` in the local testing env, it will act as if we already know its private key and can sign transactions on the behalf of `DAI_WHALE`. It will also have the amount of DAI as it has on the polygon mainnet
+After that, the lines given below will again try to impersonate/simulate the account on Polygon Mainnet with the address from `DAI_WHALE`. Now the fascinating point is that even though Hardhat doesn't have the private key of `DAI_WHALE` in the local testing environment, it will act as if we already know its private key and can sign transactions on the behalf of `DAI_WHALE`. It will also have the amount of DAI it has on the polygon mainnet.
 
 ```javascript
  await hre.network.provider.request({
@@ -340,7 +340,7 @@ After that the lines given below, will again try to impersonate/simulate the acc
     });
 ```
 
-Now after that we create a signer for `DAI_WHALE` so that we can call the simlulated DAI contract with the address of `DAI_WHALE` and transfer some `DAI` to `FlashLoanExample Contract`. We need to do this so we can pay off the loan with premium, as we will otherwise not be able to pay the premium. In real world applications, the premium would be paid off the profits made from arbitrage or attacking a smart contract.
+Now we create a signer for `DAI_WHALE` so that we can call the simlulated DAI contract with the address of `DAI_WHALE` and transfer some `DAI` to `FlashLoanExample Contract`. We need to do this so we can pay off the loan with premium, as we will otherwise not be able to pay the premium. In real world applications, the premium would be paid off the profits made from arbitrage or attacking a smart contract.
 
 ```javascript
 const signer = await ethers.getSigner(DAI_WHALE);
@@ -358,7 +358,7 @@ After this we start a flash loan and checking that the remaining balance of `Fla
     expect(remainingBalance.lt(BALANCE_AMOUNT_DAI)).to.be.true;
 ```
 
-To run the test you can on your terminal simply execute
+To run the test you can simply execute on your terminal: 
 
 ```bash
 npx hardhat test

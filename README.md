@@ -51,11 +51,11 @@ There are 4 basic steps to any flash loan. To execute a flash loan, you first ne
 
 ![](https://i.imgur.com/wbg8rZ2.png)
 
-If you look at this diagram, you can see how a flash loan helped the user make a profit in an arbitrage trade. Initially the user started a transaction by calling lets say a method `createFlashLoan` in your contract which is named as `FlashLoan Contract`. When the user calls this function, your contract calls the `Pool Contract` which exposes the liquidity management methods for a given pool of assets and has already been deployed by Aave. When the `Pool Contract` recieves a request to create a flash loan, it calls the `executeOperation` method on your contract with the DAI in the amount user has requested. Note that the user didnt have to provide any collateral to get the DAI, he just had to call the transaction and that `Pool Contract` requires you to have the `executeOperation` method for it to send you the DAI
+If you look at this diagram, you can see how a flash loan helped the user make a profit in an arbitrage trade. Initially the user started a transaction by calling lets say a method `createFlashLoan` in your contract which is named as `FlashLoan Contract`. When the user calls this function, your contract calls the `Pool Contract` which exposes the liquidity management methods for a given pool of assets and has already been deployed by Aave. When the `Pool Contract` receives a request to create a flash loan, it calls the `executeOperation` method on your contract with the DAI in the amount user has requested. Note that the user didnt have to provide any collateral to get the DAI, he just had to call the transaction and that `Pool Contract` requires you to have the `executeOperation` method for it to send you the DAI
 
 <Quiz questionId="e936505b-d029-4567-a7e0-3fe8a7cb7901" />
 
-Now in the `executeOperation` method after recieving the DAI, you can call the contract for `Exchange A` and buy some `LW3` tokens from all the DAI that the  `Pool Contract` sent you. After recieving the`LW3 Tokens` you can again swap them for DAI by calling the `Exchange B` contract. 
+Now in the `executeOperation` method after receiving the DAI, you can call the contract for `Exchange A` and buy some `LW3` tokens from all the DAI that the  `Pool Contract` sent you. After receiving the`LW3 Tokens` you can again swap them for DAI by calling the `Exchange B` contract. 
 
 <Quiz questionId="bb3db5ee-ac10-4695-9ba6-281549095fe7" />
 
@@ -163,7 +163,7 @@ contract FlashLoanExample is FlashLoanSimpleReceiverBase {
 }
 ```
 
-Now lets try to decompose this contract and understand it a little better. When we declared the contract we did it like this `contract FlashLoanExample is FlashLoanSimpleReceiverBase {`, our contract is named as `FlashLoanExample` and it is inheriting a contract named as `FlashLoanSimpleRecieverBase` which is a contract from [Aave](https://github.com/aave/aave-v3-core/blob/master/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol) which you use to setup your contract as the reciever for the flash loan. 
+Now lets try to decompose this contract and understand it a little better. When we declared the contract we did it like this `contract FlashLoanExample is FlashLoanSimpleReceiverBase {`, our contract is named as `FlashLoanExample` and it is inheriting a contract named as `FlashLoanSimpleReceiverBase` which is a contract from [Aave](https://github.com/aave/aave-v3-core/blob/master/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol) which you use to setup your contract as the receiver for the flash loan. 
 
 Now after declaring the contract, if we look at the constructor, it takes in a provider of type `IPoolAddressesProvider` which is essentially the address of the `Pool Contract` we talked about in the example above wrapped around an interface of type `IPoolAddressesProvider`. This interface is also provided to us by Aave and can be found [here](https://github.com/aave/aave-v3-core/blob/master/contracts/interfaces/IPoolAddressesProvider.sol). `FlashLoanSimpleReceiverBase` requires this provider in its constructor.
 
@@ -174,18 +174,18 @@ Now after declaring the contract, if we look at the constructor, it takes in a p
   {}
 ```
 
-The first function we implemented was `createFlashLoan` which takes in the asset and amount from the user for which he wants to start the flash loan. Now for the reciever address, you can specify the address of the `FlashLoanExample Contract` and we have no params so lets just keep it as empty. For `referralCode` we kept it as 0 because this transaction was executed by user directly without any middle man. To read more about these parameters you can go [here](https://docs.aave.com/developers/core-contracts/pool). After declaring these variables, you can call the `flashLoanSimple` method inside the instance of the `Pool Contract` which is initialized within the `FlashLoanSimpleReceiverBase` which our contract had inherited, you can look at the code [here](https://github.com/aave/aave-v3-core/blob/master/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol#L19).
+The first function we implemented was `createFlashLoan` which takes in the asset and amount from the user for which he wants to start the flash loan. Now for the receiver address, you can specify the address of the `FlashLoanExample Contract` and we have no params so lets just keep it as empty. For `referralCode` we kept it as 0 because this transaction was executed by user directly without any middle man. To read more about these parameters you can go [here](https://docs.aave.com/developers/core-contracts/pool). After declaring these variables, you can call the `flashLoanSimple` method inside the instance of the `Pool Contract` which is initialized within the `FlashLoanSimpleReceiverBase` which our contract had inherited, you can look at the code [here](https://github.com/aave/aave-v3-core/blob/master/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol#L19).
 
 <Quiz questionId="58eb6e07-7544-44d6-b4d1-4abc5fb350e0" />
 
 ```solidity
 function createFlashLoan(address asset, uint amount) external {
-      address reciever = address(this);
+      address receiver = address(this);
       bytes memory params = "";
       uint16 referralCode = 0;
 
       POOL.flashLoanSimple(
-       reciever,
+       receiver,
        asset,
        amount,
        params,

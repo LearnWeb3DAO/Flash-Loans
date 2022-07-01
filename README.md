@@ -127,10 +127,9 @@ contract FlashLoanExample is FlashLoanSimpleReceiverBase {
   event Log(address asset, uint val);
 
   constructor(IPoolAddressesProvider provider)
-    public
     FlashLoanSimpleReceiverBase(provider)
   {}
-
+  
   function createFlashLoan(address asset, uint amount) external {
       address receiver = address(this);
       bytes memory params = ""; // use this to pass arbitrary data to executeOperation
@@ -169,7 +168,6 @@ Now after declaring the contract, if we look at the constructor, it takes in a p
 
 ```solidity
   constructor(IPoolAddressesProvider provider)
-    public
     FlashLoanSimpleReceiverBase(provider)
   {}
 ```
@@ -195,7 +193,7 @@ function createFlashLoan(address asset, uint amount) external {
 
 ```
 
-After making a `flashLoanSimple` call, `Pool Contract` will perform some checks and will send asset in the amount that was requested, to the asset to the `FlashLoanExample Contract` and will call the `executeOperation` method. Now inside this method you can do anything with this asset but in this contract we just give approval to the `Pool Contract` to withdraw the amount that we owe along with some premium. Then we emit a log and return from the function
+After making a `flashLoanSimple` call, `Pool Contract` will perform some checks and will send asset in the amount that was requested, to the asset to the `FlashLoanExample Contract` and will call the `executeOperation` method. Now inside this method you can do anything with this asset but in this contract we just give approval to the `Pool Contract` to withdraw the amount that we own along with some premium. Then we emit a log and return from the function
 
 ```solidity
    function executeOperation(

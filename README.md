@@ -127,10 +127,9 @@ contract FlashLoanExample is FlashLoanSimpleReceiverBase {
   event Log(address asset, uint val);
 
   constructor(IPoolAddressesProvider provider)
-    public
     FlashLoanSimpleReceiverBase(provider)
   {}
-
+  
   function createFlashLoan(address asset, uint amount) external {
       address receiver = address(this);
       bytes memory params = ""; // use this to pass arbitrary data to executeOperation
@@ -169,7 +168,6 @@ Now after declaring the contract, if we look at the constructor, it takes in a p
 
 ```solidity
   constructor(IPoolAddressesProvider provider)
-    public
     FlashLoanSimpleReceiverBase(provider)
   {}
 ```

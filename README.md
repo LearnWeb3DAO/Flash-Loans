@@ -1,4 +1,4 @@
-# Flash Loans
+# Borrow a few million for free from Aave using Flash Loans
 
 ![](https://i.imgur.com/HZQWDCW.png)
 
@@ -86,10 +86,10 @@ Lets get started 🚀
   npm install --save-dev hardhat
   ```
   
-- If you are not on mac, please do this extra step and install these libraries as well :)
+- If you are on Windows, please do this extra step and install these libraries as well :)
 
   ```bash
-  npm install --save-dev @nomiclabs/hardhat-waffle ethereum-waffle chai @nomiclabs/hardhat-ethers ethers
+  npm install --save-dev @nomicfoundation/hardhat-toolbox
   ```
 
 - In the same directory where you installed Hardhat run:
@@ -98,10 +98,10 @@ Lets get started 🚀
   npx hardhat
   ```
 
-  - Select `Create a basic sample project`
+  - Select `Create a Javascript project`
   - Press enter for the already specified `Hardhat Project root`
   - Press enter for the question on if you want to add a `.gitignore`
-  - Press enter for `Do you want to install this sample project's dependencies with npm (@nomiclabs/hardhat-waffle ethereum-waffle chai @nomiclabs/hardhat-ethers ethers)?`
+  - Press enter for `Do you want to install this sample project's dependencies with npm (@nomicfoundation/hardhat-toolbox)?
 
 Now you have a hardhat project ready to go!
 
@@ -224,7 +224,7 @@ Note this has been referenced from the official documentation of [Hardhat](https
 To configure this, open up your `hardhat.config.js` and replace its already existing content with the following lines of code
 
 ```javascript
-require("@nomiclabs/hardhat-waffle");
+require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config({ path: ".env" });
 
 const ALCHEMY_API_KEY_URL = process.env.ALCHEMY_API_KEY_URL;

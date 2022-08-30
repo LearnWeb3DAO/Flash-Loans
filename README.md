@@ -227,7 +227,7 @@ To configure this, open up your `hardhat.config.js` and replace its already exis
 require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config({ path: ".env" });
 
-const ALCHEMY_API_KEY_URL = process.env.ALCHEMY_API_KEY_URL;
+const QUICKNODE_RPC_URL = process.env.QUICKNODE_RPC_URL;
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -237,7 +237,7 @@ module.exports = {
   networks: {
     hardhat: {
       forking: {
-        url: ALCHEMY_API_KEY_URL,
+        url: QUICKNODE_RPC_URL,
       },
     },
   },
@@ -246,15 +246,14 @@ module.exports = {
 
 You will see that we configured hardhat forking here.
 
-Now lets add the env variable for `ALCHEMY_API_KEY_URL`. 
+Now lets add the env variable for `QUICKNODE_RPC_URL`. 
 
 Create a new file called `.env` and add the following lines of code to it.
 
 ```
-ALCHEMY_API_KEY_URL="ALCHEMY-API-KEY-URL-FOR-POLYGON-MAINNET"
+QUICKNODE_RPC_URL="QUICKNODE-RPC-URL-FOR-POLYGON-MAINNET"
 ```
-Replace `ALCHEMY-API-KEY-URL-FOR-POLYGON-MAINNET` with the URL of the node for Polygon Mainnet. To get this URL go to [alchemy](https://alchemy.com) and login. After that click on `Create App` and from the dropdown select chain as `Polygon` and network as `Mainnet`. The app should now be created, click on `View Key` and copy the `HTTPS` value.
-
+Replace `QUICKNODE-RPC-URL-FOR-POLYGON-MAINNET` with the URL of the node for Polygon Mainnet. To get this URL go to [Quicknode](https://www.quicknode.com/?utm_source=learnweb3&utm_campaign=generic&utm_content=sign-up&utm_medium=learnweb3) and login. After that click on `Create an Endpoint` and select chain as `Polygon` and network as `Mainnet`. Click Continue and create the app in `Discover` mode to remain on the free tier. Copy the `HTTP Provider` link from your dashboard, and add it to the environment file.
 
 After creating the `.env` file, you will need one more file before we can actually write the test.
 
